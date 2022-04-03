@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
+import axios from 'axios';
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
 import PropTypes from 'prop-types'
@@ -20,12 +20,13 @@ const News = (props)=>{
         
         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
-        let data = await fetch(url);
-      
-        let parsedData = await data.json()
+        let Data = await axios.get(url);
+        let parsedData=Data.data.articles;
+        
+        // let parsedData = await data.json()
        
-        setArticles(parsedData.articles)
-        setTotalResults(parsedData.totalResults)
+        setArticles(parsedData)
+        setTotalResults(parsedData.length)
         setLoading(false)
   
 
